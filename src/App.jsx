@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Input } from "./components/forms/Input.jsx";
-import { Checkbox } from "./components/forms/Checkbox";
+import { Checkbox } from "./components/forms/Checkbox.jsx";
 import { ProductCategoryRow } from "./components/products/ProductCategoryRow.jsx";
 import { ProductRow } from "./components/products/ProductRow.jsx";
+import { Input } from "./components/forms/Input.jsx";
 
 const PRODUCTS = [
   {
@@ -45,42 +45,51 @@ const PRODUCTS = [
 
 function App() {
   const [showStockedOnly, setShowStockedOnly] = useState(false);
-  const  [search , setSearch] = useState('')
+  const [search, setSearch] = useState("");
 
-  const visibleProducts = PRODUCTS.filter(product => {
-    if( showStockedOnly && !product.stocked){
-      return false
+  const visibleProducts = PRODUCTS.filter((product) => {
+    if (showStockedOnly && !product.stocked) {
+      return false;
     }
 
-    if( search && !product.name.includes(search)){
-      return false
+    if (search && !product.name.includes(search)) {
+      return false;
     }
 
-    return true
-  })
-
+    return true;
+  });
 
   return (
     <div className="container my-3">
       <SearchBar
-        search = {search}
-        onSearchCange = {setSearch()}
+        search={search}
+        onSearchChange={setSearch}
         showStockedOnly={showStockedOnly}
         onStockOnlyChange={setShowStockedOnly}
       />
+
       <ProductTable products={visibleProducts} />
     </div>
   );
 }
 
-function SearchBar({ showStockedOnly, onStockOnlyChange , search , onSearchCange }) {
+function SearchBar({
+  showStockedOnly,
+  onStockOnlyChange,
+  search,
+  onSearchChange,
+}) {
   return (
     <div>
       <div className="mb-3">
-        <Input value={search} onChange={onSearchCange} placeholder="Rechercher..." />
+        <Input
+          value={search}
+          onChange={onSearchChange}
+          placeholder="Rechercher..."
+        />
         <Checkbox
           type="checkbox"
-          id="stock "
+          id="stock"
           checked={showStockedOnly}
           label="N'affichez que les produits en stock"
           onChange={onStockOnlyChange}
