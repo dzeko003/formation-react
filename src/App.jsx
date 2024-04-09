@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input } from "./components/forms/input";
 
+
 function App() {
   return (
     <>
@@ -15,18 +16,13 @@ function EditTitle() {
 
   return (
     <div className="vstack gap-2">
+
       <Input
-        type="text"
-        placeholder="Modifier le titre"
-        value={title}
-        onChange={setTitle}
+       placeholder="Modifier le titre"
+       value={title}
+       onChange={setTitle}
       />
-      <Input
-        type="text"
-        placeholder="Modifier le prénom"
-        value={firstname}
-        onChange={setFirstName}
-      />
+      <Input placeholder="prenom" value={firstname} onChange={setFirstName} />
     </div>
   );
 }
