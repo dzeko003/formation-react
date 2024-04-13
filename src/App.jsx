@@ -3,25 +3,22 @@ import { Input } from "./components/forms/Input.jsx";
 import { Checkbox } from "./components/forms/Checkbox.jsx";
 import { useIncrement } from "./hooks/useIncrement.js";
 import { useDocumentTitle } from "./hooks/useDocumentTitle.js";
+import { useFetch } from "./hooks/useFetch.js";
 
 
 
 function App() {
-  const {count, decrement, increment} = useIncrement({
-    base:0,
-    max:10,
-    min:0
-  })
-
-  const [name , setName] = useState('')
-
-  useDocumentTitle(name ? `Editer ${name}` : null)
+  
+  const {loading , data , errors} = useFetch("https://jsonplaceholder.typicode.com/posts?_limit=10&_delay=5000");
 
   return <div>
-        <Input value={name} onChange={setName} label="Nom" />
-        Compteur {count}
-        <button onClick={increment}>Incrémenter</button>
-        <button onClick={decrement}>Décrémenter</button>
+        {loading && <div>Chargement...</div>}
+        {errors && <div className="alert alert-danger">{errors.toString()}</div>}
+        {data && <div>
+            <ul>
+              {data.map(post =>(<li key={post.id}>{post.title}</li>))}
+            </ul>
+          </div>}
   </div>
 }
 
