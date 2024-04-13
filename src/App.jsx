@@ -1,32 +1,28 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Input } from "./components/forms/Input.jsx";
 import { Checkbox } from "./components/forms/Checkbox.jsx";
+import { useIncrement } from "./hooks/useIncrement.js";
+import { useDocumentTitle } from "./hooks/useDocumentTitle.js";
+
+
 
 function App() {
+  const {count, decrement, increment} = useIncrement({
+    base:0,
+    max:10,
+    min:0
+  })
 
-  const prefixRef = useRef(null)
-  const [prefix , setPrefix] = useState('')
-  prefixRef.current = prefix
+  const [name , setName] = useState('')
 
-  useEffect(() => {
-   const timer = setInterval(() => {
-      console.log(prefixref.current);
-   }, 1000)
+  useDocumentTitle(name ? `Editer ${name}` : null)
 
-   return () => {
-    clearInterval(timer)
-   }
-  },[])
-
-  return (
-    <div ref={ref}>
-      <Input label="prefix" onChange={setPrefix}/>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis ullam eius
-      excepturi dolorem tempora beatae, at accusantium. Eligendi error iure
-      assumenda ipsum sint corrupti architecto animi itaque reprehenderit,
-      perspiciatis iusto.
-    </div>
-  );
+  return <div>
+        <Input value={name} onChange={setName} label="Nom" />
+        Compteur {count}
+        <button onClick={increment}>Incrémenter</button>
+        <button onClick={decrement}>Décrémenter</button>
+  </div>
 }
 
 export default App;
