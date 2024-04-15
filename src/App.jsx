@@ -1,40 +1,66 @@
-import { useEffect, useMemo, useRef, useState , memo, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState, memo, useCallback } from "react";
 import { Input } from "./components/forms/Input.jsx";
 import { Checkbox } from "./components/forms/Checkbox.jsx";
 import { useIncrement } from "./hooks/useIncrement.js";
 import { useDocumentTitle } from "./hooks/useDocumentTitle.js";
 import { useFetch } from "./hooks/useFetch.js";
+import { createPortal } from "react-dom";
 
 function App() {
-  const [name, setName] = useState("");
-
-  // console.log('App' , 'render');
-
-  const nameRef = useRef(name)
-  nameRef.current = name
-
-  const handleClick = useCallback( () => {
-    console.log(nameRef.current);
-  }, [])
-
-  return <div className="container my-2 vstack gap-2">
-    <div>
-      <Input label="Prénom" onChange={setName} value={name}/>
-      <div>
-        {name.toUpperCase()}
-      </div>
+  return (
+    <div
+      style={{
+        height: 300,
+        overflowY: "scroll",
+        background: "#EEE",
+        margin: 20,
+        position: "relative",
+      }}
+    >
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+        temporibus recusandae doloremque odit iusto explicabo expedita modi
+        optio dolorem delectus! Pariatur, repellat aut. Neque autem possimus
+        odit quasi iure non magnam ut voluptates, iusto saepe sapiente id cum
+        hic rem deleniti cupiditate amet quidem, aliquid nemo pariatur. Nam,
+        assumenda excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+        temporibus recusandae doloremque odit iusto explicabo expedita modi
+        optio dolorem delectus! Pariatur, repellat aut. Neque autem possimus
+        odit quasi iure non magnam ut voluptates, iusto saepe sapiente id cum
+        hic rem deleniti cupiditate amet quidem, aliquid nemo pariatur. Nam,
+        assumenda excepturi.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque
+        temporibus recusandae doloremque odit iusto explicabo expedita modi
+        optio dolorem delectus! Pariatur, repellat aut. Neque autem possimus
+        odit quasi iure non magnam ut voluptates, iusto saepe sapiente id cum
+        hic rem deleniti cupiditate amet quidem, aliquid nemo pariatur. Nam,
+        assumenda excepturi.
+      </p>
+      <Modal />
     </div>
-    <InfoMemo onClick = {handleClick} />
-  </div>
+  );
 }
 
-const InfoMemo = memo( function Info({onClick}){
-  // waitSync(500)
-  console.log('Info' , 'render');
-  return <div className="alert alert-info" onClick={onClick}>
-    Lorem ipsum dolor, sit amet consectetur adipisicing
-     elit. Eligendi porro, laudantium eius perspiciatis ut
-      vel dolorem provident veniam cumque corrupti libero nobis molestias delectus quis voluptatum at aliquam, aut quidem!
-  </div>
-})
+function Modal() {
+  return createPortal(
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        padding: 10,
+        border: "solid 1px grey",
+        background: "#FFF",
+      }}
+    >
+      Je suis une modale
+    </div> , document.body
+  );
+}
+
 export default App;
